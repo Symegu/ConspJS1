@@ -71,3 +71,103 @@ function sum(num1, num2) {
 
 let result = sum (2,4);
 alert(result)
+
+... Доп материал -Настраиваемые свойства объектов.
+
+Свойства объектам можно устанавливать напрямую, например:
+
+const obj = {};
+obj.myProp = 5; // установили свойство
+console.log(obj.myProp); // вывели 5 из свойства.
+
+
+Можно менять свойство и его поведение/детали используя метод у глобального объекта Object - метод Object.defineProperty(),
+https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+Определяет новое или изменяет существующее свойство непосредственно на объекте, возвращая этот объект
+
+Также свойство в можно настроить:
+
+value - установка значения свойства (число, объект, функция и т.д), значение по умолчанию установлено в undefined
+configurable - Контролирует, может ли свойство быть удалено из объекта и могут ли быть измененыего атрибуты (кроме контроля изменения атрибута writable).
+
+const obj = {};
+
+Object.defineProperty(obj, 'myProp', {
+value: "Привет",
+configurable: false
+});
+
+Object.defineProperty(obj, 'myProp', { configurable: true });
+Object.defineProperty(obj, 'myProp', { enumerable: true });
+
+console.log(obj.myProp);
+delete obj.myProp;
+console.log(obj.myProp);
+
+
+Если мы свойству поставили бы writable:true, то мы могли бы поменять это свойство.
+enumerable - Можно ли увидеть через перечисление (for...in, Object.keys()).
+
+const obj = {};
+Object.defineProperty(obj, 'myProp1', {
+value: 1,
+enumerable: true,
+});
+
+Object.defineProperty(obj, 'myProp2', {
+value: 2,
+enumerable: false,
+});
+
+for (const prop in obj) {
+console.log(prop);
+}
+
+
+writable - можно ли менять значение, записать новое.
+
+
+const obj = {};
+Object.defineProperty(obj, 'myProp', {
+value: "Привет",
+writable: false,
+});
+
+console.log(obj.myProp);
+obj.myProp = "Пока";
+
+
+get - геттер, т.е. функция, которая вернет значение, когда мы это свойство спросим
+set - сеттер, т.е. функция, которая поставит значение свойству.
+
+const obj = {};
+let values = ["Привет"];
+let getCount = 0;
+
+Object.defineProperty(obj, 'myProp', {
+get() {
+console.log(`Количество запросов включая этот: ${++getCount}`);
+return values[values.length - 1];
+},
+
+set(newValue) {
+values.push(newValue);
+console.log(`Все значения которые были установлены включая новое: ${values.join(', ')}`);
+}
+});
+
+На практике очень редко применяется
+
+
+также объекты иногда необходимо бывает сделать так, чтобы в них невозможно было записать новые свойства или изменить/удалить значения, которые уже есть
+3 метода у глобального объекта Object:
+
+Создание Чтение Редактирование Удаление
+
+Object.freeze ✗ ✓ ✗ ✗
+Object.seal ✗ ✓ ✓ ✗
+Object.preventExtensions ✗ ✓ ✓ ✓
+
+Обратных действий, например разморозить объект нет.
+https://github.com/piecioshka/test-freeze-vs-seal-vs-preventExtensions
+
