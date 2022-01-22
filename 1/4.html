@@ -26,22 +26,13 @@
 Уточнение: пользователь всегда вводит корректное положительное число.
 -->
 <script>
-  "use strict";
+"use strict";
 
-  const number = +prompt('Введите число ');
-  const unit = number % 10;
-  const dozen = Math.trunc(number / 10) % 10;
-  const hundred = Math.trunc(number / 100) % 10;
-  console.log(`В числе ${number} количество сотен: ${hundred}, десятков: ${dozen}, единиц: ${unit}`)
-</script>
+const num = prompt('');
+const dozen = parseInt(num%100/10)%10;
+const hundred = parseInt(num%1000/100)%10;
 
-<script>
-  "use strict";
-
-  /* Вариант второй */
-  const num = prompt('Введите число ');
-  num[num.length - 3]
-  console.log(`В числе ${number} количество сотен: ${number[number.length-3]}}, десятков: ${number[number.length-2]}, единиц: ${number[number.length-1]}`)
+console.log(`В числе ${num} сотен: ${hundred} десятков:${dozen} единиц:${num%10}`)
 </script>
 </body>
 </html>
