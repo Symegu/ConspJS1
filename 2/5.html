@@ -31,8 +31,38 @@ Infinity делать не нужно, однако, в случае если б
 -->
 <script>
   "use strict";
+  function mathOperation(arg1, arg2, operation) {
+    switch (operation){
+      case "+": return sum(arg1, arg2);
+      case "-": return odd(arg1, arg2);
+      case "*": return prod(arg1, arg2);
+      case "/": return division(arg1, arg2);
+      default: return NaN;
+    }
+  }
 
-  // Здесь пишем решение, данный комментарий необходимо стереть.
+  function sum(a, b) {
+    return a+b;
+  }
+
+  function odd(a, b) {
+    if (a>b){
+      return a-b;
+    } else {
+      return b-a;
+    }
+  }
+
+  function prod(a, b) {
+    return a*b;
+  }
+
+  function division(a, b) {
+    return a/b;
+  }
+
+  console.log(mathOperation(5, 3, "+")); // 8
+  console.log(mathOperation(5, 3, ":)")); // NaN
 </script>
 </body>
 </html>
