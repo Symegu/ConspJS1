@@ -75,7 +75,7 @@ console.log(new car1.constructor('Mercedes'));
 
 В прототип кладутся все общие методы объектов, а так же общие свойства, чтобы не создавать одно и то же свойство для каждого нового объекта и не засорять оперативку
 
-Заимствование функций:
+Заимствование функций:     ES5 В БОЛЬШЕЙ СТЕПЕНИ
 
 function superBeep(num){
     console.log(`${this.model} подает громкий сигнал ${num} раз`);
@@ -118,10 +118,6 @@ Employee.prototype.sayPosition = function(){
 const employee1 = new Employee('John', m, 'director')
 
 Плохо, что дублируется код для человека и для рабочего -->>
-
-
-
-
 
 
 
@@ -180,3 +176,72 @@ __proro__: { //Object.create(Person.prototype)
     }
 }
 
+
+
+Остается проблема, что если вызвать employee1.constructor, то выводит Person
+Object.create создает совершенно новый объект, который не имеет свойство constructor
+
+По умолчанию(до махинаций) 
+Employee.prototype = {
+    constructor: Employee,
+}
+
+Но когда мы делаем
+Employee.prototype = Object.create(Person.prototype) 
+То заменяем Employee.constructor на полностью пустой объект, в прототипе которого будет Person.prototype, constructor нету
+
+Соответственно при вызове employee1.constructor, первым будет Person.constructor
+
+
+Поэтому правильно будет 
+Employee.prototype.constructor = Employee;
+
+
+ES6 Классы:
+
+class Person {
+    constructor(name, gender) {
+        this.name = name;
+        this.gender = gender;
+    }
+
+    sayName() {
+        console.log(`Меня зовут ${this.name}`);
+    }
+}
+
+class Employee extends Person {  //наследуем у Person
+    constructor(name, gender, position) {
+        super(name, gender);
+        this.position = position;
+    }
+
+    sayPosition() {
+        console.log(`Я ${this.position}`);
+    }
+}
+
+
+
+Сравнение по ссылке
+
+let bool1 = true;
+let bool2 = true;
+console.log(bool1 === bool2); //true 
+Сравниваются по значению
+
+
+let obj1 = {};
+let obj2 = {};
+console.log(obj1 === obj2); //false
+Сравниваются по ссылке на ячейку памяти
+
+
+instanceof проверяет были ли создан определенный обьект определенным конструктором
+
+function User(){}
+const user1 = new User();
+console.log(user1 instanceof User); //true 
+
+
+В доп материалах еще про сборщик писем и шифровальщик
