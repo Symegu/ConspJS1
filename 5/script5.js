@@ -103,3 +103,17 @@ event.targer - целевой элемент
 event.currentTarget - элемент на который повешен слушатель события
 event.stopPropogation() - останавливает всплытие наследуемых событий //лучше не использовать
 event.stopImmediatePropogation() - останавливает все всплытия //лучше не использовать
+
+
+Валидация формы
+
+button.addEventListener('click', function(){
+    if (!/\d/.test(input.value)) {     //  /\d/ - регулярное выражение digital (цифра), test - метод проверки, если не цифра введена в инпут
+        div.style.display = 'block';
+    }
+    else{
+        div.style.display = 'none';
+    }
+});
+
+//в допах много примеров event 
